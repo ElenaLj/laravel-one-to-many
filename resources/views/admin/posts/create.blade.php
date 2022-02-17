@@ -33,6 +33,21 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
 
+                        {{-- Select Category --}}
+                        <div class="form-group">
+                                <label for="category_id">Categories</label>
+                                <select class="custom-select mb-3 @error('content') is-invalid @enderror" name="category_id">
+                                <option value="">Select a category</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{$category->id}}" {{old("category_id") == $category->id ? "selected" : ""}}>{{$category->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        {{-- Select Category Error --}}
+                        @error('content')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+
                         {{-- Checkbox --}}
                         <div class="form-group form-check">
                             <input type="checkbox" class="form-check-input @error('published') is-invalid @enderror" id="published" name="published" {{old('published') ? 'checked' : '' }}>
@@ -43,7 +58,7 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
 
-                        {{-- Sumbit Button --}}
+                        {{-- Submit Button --}}
                         <button type="submit" class="btn btn-success">Submit</button>
                     </form>
 
