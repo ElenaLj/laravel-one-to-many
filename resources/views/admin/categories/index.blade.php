@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">All Posts</div>
+                <div class="card-header">All Categories</div>
 
                 <div class="card-body">
                     {{-- <ul>
@@ -20,8 +20,8 @@
                         @endforeach
                     </ul> --}}
                     <div class="mb-3">
-                        <a href="{{route("posts.create")}}">
-                            <button type="button" class="btn btn-dark">Add Post</button>
+                        <a href="{{route("categories.create")}}">
+                            <button type="button" class="btn btn-dark">Add Category</button>
                         </a>
                     </div>
 
@@ -29,10 +29,8 @@
                         <thead>
                           <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Title</th>
+                            <th scope="col">Name</th>
                             <th scope="col">Slug</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Category</th>
                             <th scope="col">Actions</th>
                             <th scope="col">Actions</th>
                             <th scope="col">Actions</th>
@@ -40,47 +38,30 @@
                         </thead>
 
                         <tbody>
-                            @foreach ($posts as $post)
+                            @foreach ($categories as $category)
                             <tr>
-                                <td>{{$post->id}}</td>
-                                <td>{{$post->title}}</td>
-                                <td>{{$post->slug}}</td>
+                                <td>{{$category->id}}</td>
+                                <td>{{$category->name}}</td>
+                                <td>{{$category->slug}}</td>
 
-                                {{-- Status badge --}}
-                                <td>
-                                    @if ($post->published)
-                                        <span class="badge badge-success w-100">Published</span>
-                                    @else
-                                        <span class="badge badge-warning w-100">Draft</span>
-                                    @endif 
-                                </td>
-
-                                {{-- Category badge --}}
-                                <td>
-                                    @if ($post->category)
-                                        <span class="badge badge-info w-100">{{$post->category->name}}</span>
-                                    @else
-                                        <span class="badge badge-secondary w-100">No category</span>
-                                    @endif 
-                                </td>
                                 {{-- OPEN RECORD --}}
                                 <td>
-                                    <a href="{{route("posts.show", $post->id)}}">
-                                        <button type="button" class="btn btn-light">Show</button>
+                                    <a href="{{route("categories.show", $category->id)}}">
+                                        <button type="button" class="btn btn-light">Show category</button>
                                     </a>
                                 </td>
                                 {{-- EDIT RECORD --}}
                                 <td>
-                                    <a href="{{route("posts.edit", $post->id)}}">
-                                        <button type="button" class="btn btn-warning">Edit</button>
+                                    <a href="{{route("categories.edit", $category->id)}}">
+                                        <button type="button" class="btn btn-warning">Edit category</button>
                                     </a>
                                 </td>
                                 {{-- DELETE RECORD --}}
                                 <td>
-                                    <form action="{{route("posts.destroy", $post->id)}}" method="POST">
+                                    <form action="{{route("categories.destroy", $category->id)}}" method="POST">
                                         @csrf
                                         @method("DELETE")
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-danger">Delete category</button>
                                     </form>
                                 </td>
                             </tr>
