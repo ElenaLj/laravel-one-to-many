@@ -63,6 +63,7 @@ class PostController extends Controller
         //     $newPost->published = true;
         // }
         $newPost->published = isset($data["published"]);
+        $newPost->category_id=$data["category_id"];
 
         $slug = Str::of($newPost->title)->slug('-');
         $count = 1;
@@ -97,7 +98,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view("admin.posts.edit", compact("post"));
+        $categories = Category::all();
+        return view("admin.posts.edit", compact("post", "categories"));
     }
 
     /**
@@ -115,6 +117,7 @@ class PostController extends Controller
             "title" => "required|string|max:150",
             "content" => "required",
             "published" => "sometimes|accepted",
+            "category_id" => "nullable|exists:categories,id",
             ]
         );
 
@@ -138,6 +141,7 @@ class PostController extends Controller
         }
 
         $post->content = $data["content"];
+        $post->category_id=$data["category_id"];
 
         // if (isset($data["published"]) ) {
         //     $post->published = true;

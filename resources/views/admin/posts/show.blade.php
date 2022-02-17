@@ -17,6 +17,16 @@
                             <span class="badge badge-warning">Status: Draft</span>
                         @endif 
                     </div>
+
+                    <div class="mb-3">
+                        @if ($post->category)
+                            <span class="badge badge-info">Category: {{$post->category->name}}</span>
+                        @else
+                            <span class="badge badge-secondary">No category</span>
+                        @endif 
+                        {{-- @dd($post); --}}
+                        {{-- @dd($post->category)--}}
+                    </div>
                     <p>{{$post->content}}</p>
                     <a href="{{route("posts.index")}}" class="mt-2">
                         <button type="button" class="btn btn-dark">Go back</button>
