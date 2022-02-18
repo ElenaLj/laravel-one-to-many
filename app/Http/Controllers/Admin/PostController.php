@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Post;
 use App\Category;
@@ -41,7 +42,9 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        //check incoming datas
+        //dd($request->all());
+
         //data validation
         $request->validate(
             [
@@ -49,6 +52,7 @@ class PostController extends Controller
             "content" => "required",
             "published" => "sometimes|accepted",
             "category_id" => "nullable|exists:categories,id",
+            "image" => "nullable|image|mimes:jpeg,bmp,png|max:2048"
             ]
         );
 
@@ -73,6 +77,13 @@ class PostController extends Controller
             $count++;
         }
         $newPost->slug = $slug;
+
+        // save image if present
+        if(isset($data["image"])) {
+            $path_image = Storage::put("uploads", $data["image"]);
+            $newPost->image = $path_image;
+        }
+
         $newPost->save();
 
         //redirect

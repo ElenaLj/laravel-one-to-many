@@ -10,7 +10,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form action="{{route("posts.store")}}" method="POST">
+                    <form action="{{route("posts.store")}}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         {{-- Post Title --}}
@@ -57,6 +57,12 @@
                         @error('published')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
+
+                        {{-- Insert Image file --}}
+                        <div class="form-group custom-file mb-3">
+                            <input type="file" class="custom-file-input" id="image" name="image">
+                            <label class="custom-file-label" for="image">Choose file</label>
+                          </div>
 
                         {{-- Submit Button --}}
                         <button type="submit" class="btn btn-success">Submit</button>

@@ -11,6 +11,11 @@
 
                 <div class="card-body">
                     <div class="mb-3">
+                        @if ($post->image)
+                            <img src="{{asset("storage/{$post->image}")}}" alt="">
+                        @endif
+                    </div>
+                    <div class="mb-3">
                         @if ($post->published)
                             <span class="badge badge-success">Status: Published</span>
                         @else
