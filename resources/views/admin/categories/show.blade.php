@@ -15,6 +15,17 @@
                         <button type="button" class="btn btn-dark">Go back</button>
                     </a>
                 </div>
+                @if (count($category->posts) > 0)
+                <div class="card-body">
+                    <h3>Category linked posts</h3>
+                    <ul>
+                        {{-- @dd($category->posts); --}}
+                        @foreach ($category->posts as $post)
+                            <li>{{$post->title}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
             </div>
         </div>
     </div>

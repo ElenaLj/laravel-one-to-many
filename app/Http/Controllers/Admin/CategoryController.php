@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Category;
 
 class CategoryController extends Controller
@@ -37,7 +38,22 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validation
+        $request->validate([
+            "name" => "required|string|max:255|unique:categories,name" // unique needs a parameter: insert table and eventually the column
+        ]);
+
+        //save datas
+        $data = $request->all();
+
+        //create the category
+        $newCategory = new Category();
+        $newCategory->name = $data["name"];
+        $newCategory->slug = Str::of($newCategory->name)->slug('-');
+        $newCategory->save();
+
+        //redirect to created category
+        return redirect()->route("categories.show", $newCategory->id);
     }
 
     /**
@@ -59,8 +75,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $categories = Category::all();
-        return view("admin.categories.edit", compact("category", "categories"));
+        // $categories = Category::all();
+        return view("admin.categories.edit", compact("category"));
     }
 
     /**
@@ -70,9 +86,23 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        //validation
+        $request->validate([
+            "name" => "required|string|max:255|unique:categories,name, {$category->id}" // unique needs a parameter: insert table and eventually the column
+        ]);
+
+        //save datas
+        $data = $request->all();
+
+        //create the category
+        $category->name = $data["name"];
+        $category->slug = Str::of($category->name)->slug('-');
+        $category->save();
+
+        //redirect to created category
+        return redirect()->route("categories.show", $category->id);
     }
 
     /**
@@ -81,8 +111,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->route("categories.index");
     }
 }

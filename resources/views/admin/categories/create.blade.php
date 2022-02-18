@@ -15,14 +15,8 @@
                         
                         {{-- New Select Category --}}
                         <div class="form-group">
-                            <label for="category_id">Categories</label>
-                            <input type="text">
-                            <select class="custom-select mb-3 @error('content') is-invalid @enderror" name="category_id">
-                            <option value="">Select a category</option>
-                            @foreach ($categories as $category)
-                                <option value="{{$category->id}}" {{old("category_id") == $category->id ? "selected" : ""}}>{{$category->name}}</option>
-                            @endforeach
-                            </select>
+                            <label for="name">Name</label>
+                            <input name="name" type="text" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Insert new category name here" value="{{old('name')}}">
                         </div>
                         {{-- Select Category Error --}}
                         @error('content')
