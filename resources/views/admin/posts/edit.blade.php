@@ -10,7 +10,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form action="{{route("posts.update", $post->id)}}" method="POST">
+                    <form action="{{route("posts.update", $post->id)}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method("PUT")
 
@@ -48,6 +48,12 @@
                         @error('content')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
+
+                        {{-- Edit Image file --}}
+                        <div class="form-group custom-file mb-3">
+                            <input type="file" class="custom-file-input" id="image" name="image">
+                            <label class="custom-file-label" for="image">Select another file</label>
+                        </div>
 
                         {{-- Checkbox --}}
                         <div class="form-group form-check">

@@ -162,6 +162,15 @@ class PostController extends Controller
 
         $post->published = isset($data["published"]);
         
+        // save image if present
+        if(isset($data["image"])) {
+            //delete existing image
+            Storage::delete($post->image);
+
+            $path_image = Storage::put("uploads", $data["image"]);
+            $post->image = $path_image;
+        }
+            // upload new one
         $post->save();
 
         //redirect
@@ -176,8 +185,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if($post->image){
+            Storage::delete($post->image);
+        }
         $post->delete();
-
         return redirect()->route("posts.index");
     }
 }

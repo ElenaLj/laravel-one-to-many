@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <div class="mb-3">
                         @if ($post->image)
-                            <img src="{{asset("storage/{$post->image}")}}" alt="">
+                            <img src="{{asset("storage/{$post->image}")}}" alt="{{$post->title}}" class="w-100">
                         @endif
                     </div>
                     <div class="mb-3">
