@@ -60,14 +60,16 @@ class PostController extends Controller
 
         //insert a new record in db table
         $newPost = new Post();
-        $newPost->title = $data["title"];
-        $newPost->content = $data["content"];
+        $newPost->fill($data);
+
+        // $newPost->title = $data["title"];
+        // $newPost->content = $data["content"];
 
         // if (isset($data["published"]) ) {
         //     $newPost->published = true;
         // }
         $newPost->published = isset($data["published"]);
-        $newPost->category_id=$data["category_id"];
+        // $newPost->category_id=$data["category_id"];
 
         $slug = Str::of($newPost->title)->slug('-');
         $count = 1;

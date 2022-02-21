@@ -60,7 +60,7 @@
 
                         {{-- Insert Image file --}}
                         <div class="form-group custom-file mb-3">
-                            <input type="file" class="custom-file-input class="@error('title') is-invalid @enderror"" id="image" name="image">
+                            <input type="file" class="custom-file-input @error('title') is-invalid @enderror" id="image" name="image">
                             <label class="custom-file-label" for="image">Choose file</label>
                         </div>
 
