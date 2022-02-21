@@ -49,6 +49,23 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
 
+                        {{-- Tags Section--}}
+                        <div class="form-group">
+                            <p>Choose tags</p>
+                            
+                            @foreach ($post->tags as $tag)
+                            {{-- @dd($tags) --}}
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" class="form-check-input @error('tags') is-invalid @enderror" id="{{$tag->slug}}" name="tags[]" value="{{$tag->id}}" {{in_array($tag->id, old("tags", [])) ? "checked" : ""}}>
+                                <label class="form-check-label" for="{{$tag->slug}}">{{$tag->name}}</label>
+                            </div>
+                            @endforeach
+                        </div>
+                        {{-- Tags Error --}}
+                        @error('tags')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+
                         {{-- Edit Image file --}}
                         <div class="form-group custom-file mb-3">
                             <input type="file" class="custom-file-input" id="image" name="image">

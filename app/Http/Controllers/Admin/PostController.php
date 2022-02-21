@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Post;
 use App\Category;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -31,7 +32,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view("admin.posts.create", compact("categories"));
+        $tags = Tag::all();
+        return view("admin.posts.create", compact("categories", "tags"));
     }
 
     /**
@@ -52,7 +54,8 @@ class PostController extends Controller
             "content" => "required",
             "published" => "sometimes|accepted",
             "category_id" => "nullable|exists:categories,id",
-            "image" => "nullable|image|mimes:jpeg,bmp,png|max:2048"
+            "image" => "nullable|image|mimes:jpeg,bmp,png|max:2048",
+            "tags" => "nullable|exists:tags,id"
             ]
         );
 
@@ -87,6 +90,11 @@ class PostController extends Controller
         }
 
         $newPost->save();
+
+        // create tags
+        if(isset($data["tags"])) {
+            $newPost->tags()->sync($data["tags"]);
+        }
 
         //redirect
         return redirect()->route("posts.show", $newPost->id);
@@ -172,8 +180,14 @@ class PostController extends Controller
             $path_image = Storage::put("uploads", $data["image"]);
             $post->image = $path_image;
         }
-            // upload new one
+        
+        // upload new one
         $post->save();
+
+        // update tags
+        if(isset($data["tags"])) {
+            $post->tags()->sync($data["tags"]);
+        }
 
         //redirect
         return redirect()->route("posts.show", $post->id);

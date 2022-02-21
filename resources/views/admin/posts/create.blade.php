@@ -48,6 +48,23 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
 
+                        {{-- Tags Section--}}
+                        <div class="form-group">
+                            <p>Choose tags</p>
+                            
+                            @foreach ($tags as $tag)
+                            {{-- @dd($tags) --}}
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" class="form-check-input @error('tags') is-invalid @enderror" id="{{$tag->slug}}" name="tags[]" value="{{$tag->id}}" {{in_array($tag->id, old("tags", [])) ? "checked" : ""}}>
+                                <label class="form-check-label" for="{{$tag->slug}}">{{$tag->name}}</label>
+                            </div>
+                            @endforeach
+                        </div>
+                        {{-- Tags Error --}}
+                        @error('tags')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+
                         {{-- Checkbox --}}
                         <div class="form-group form-check">
                             <input type="checkbox" class="form-check-input @error('published') is-invalid @enderror" id="published" name="published" {{old('published') ? 'checked' : '' }}>
